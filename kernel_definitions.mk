@@ -135,10 +135,10 @@ ifeq ($(KERNEL_LLVM_SUPPORT),true)
   cc := CC=clang
   ifeq ($(KERNEL_FULL_LLVM),true)
   $(warning Compiling the kernel with full LLVM)
-  real_cc := PATH=$(KERNEL_LLVM_BIN):$$PATH REAL_CC=clang AR=llvm-ar LLVM_NM=llvm-nm OBJCOPY=llvm-objcopy LD=ld.lld NM=llvm-nm LLVM=1 LLVM_IAS=1
+  real_cc := PATH=$(KERNEL_LLVM_BIN):$$PATH REAL_CC=$(KERNEL_LLVM_BIN)/clang AR=$(KERNEL_LLVM_BIN)/llvm-ar LLVM_NM=$(KERNEL_LLVM_BIN)/llvm-nm OBJCOPY=$(KERNEL_LLVM_BIN)/llvm-objcopy LD=$(KERNEL_LLVM_BIN)/ld.lld NM=$(KERNEL_LLVM_BIN)/llvm-nm LLVM=1 LLVM_IAS=1
   else
   $(warning Compiling the kernel with LLVM + GNU cross compile)
-  real_cc := PATH=$(KERNEL_LLVM_BIN):$$PATH REAL_CC=clang $(gcc_cc) AR=llvm-ar LLVM_NM=llvm-nm OBJCOPY=llvm-objcopy LD=ld.lld NM=llvm-nm LLVM=1 LLVM_IAS=1
+  real_cc := PATH=$(KERNEL_LLVM_BIN):$$PATH REAL_CC=$(KERNEL_LLVM_BIN)/clang $(gcc_cc) AR=$(KERNEL_LLVM_BIN)/llvm-ar LLVM_NM=$(KERNEL_LLVM_BIN)/llvm-nm OBJCOPY=$(KERNEL_LLVM_BIN)/llvm-objcopy LD=$(KERNEL_LLVM_BIN)/ld.lld NM=$(KERNEL_LLVM_BIN)/llvm-nm LLVM=1 LLVM_IAS=1
   endif
 else
   ifeq ($(KERNEL_NEW_GCC_SUPPORT),true)
