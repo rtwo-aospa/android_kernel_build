@@ -83,7 +83,7 @@ headers_install()
 	echo "======================"
 	echo "Installing kernel headers"
 	set -x
-	(cd ${OUT_DIR} && \
+	(cd ${KERNEL_DIR} && \
 	${MAKE_PATH}make HOSTCFLAGS="${TARGET_INCLUDES}" HOSTLDFLAGS="${TARGET_LINCLUDES}" ARCH=${ARCH} ${real_cc} O=${OUT_DIR} ${CC_ARG} ${MAKE_ARGS} headers_install)
 	set +x
 }
@@ -99,7 +99,7 @@ build_kernel()
 	else
 		NCORES=8
 	fi
-	(cd ${OUT_DIR} && \
+	(cd ${KERNEL_DIR} && \
 	${MAKE_PATH}make ARCH=${ARCH} ${real_cc} HOSTCFLAGS="${TARGET_INCLUDES}" HOSTLDFLAGS="${TARGET_LINCLUDES}" O=${OUT_DIR} ${CC_ARG} ${MAKE_ARGS} -j${NCORES})
 	set +x
 }
@@ -112,7 +112,7 @@ modules_install()
 	rm -rf ${MODULES_STAGING_DIR}
 	mkdir -p ${MODULES_STAGING_DIR}
 	set -x
-	(cd ${OUT_DIR} && \
+	(cd ${KERNEL_DIR} && \
 	${MAKE_PATH}make O=${OUT_DIR} ${CC_ARG} INSTALL_MOD_STRIP=1 INSTALL_MOD_PATH=${MODULES_STAGING_DIR} ${MAKE_ARGS} modules_install)
 	set +x
 }
@@ -368,7 +368,7 @@ save_unstripped_modules()
 
 	set -x
 
-	(cd ${OUT_DIR} && \
+	(cd ${KERNEL_DIR} && \
 	${MAKE_PATH}make O=${OUT_DIR} ${CC_ARG} INSTALL_MOD_PATH=${UNSTRIPPED_DIR} ${MAKE_ARGS} modules_install)
 
 	MODULES=$(find ${UNSTRIPPED_DIR} -type f -name "*.ko")
